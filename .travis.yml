@@ -1,8 +1,15 @@
 
-sudi: required
+sudo: required
 services:
   - docker
 
 script:
-  - docker build -t /krisso-hub/nanny
+  - docker build -t /krisso-hub/nanny .
   - docker images krisso-hub/nanny
+before_deploy:
+  - docker login -u "" -p ""
+deploy: 
+  provider: script
+  script: docker push krisso-hub/nanny
+  on:
+    branch: master
