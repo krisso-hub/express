@@ -1,0 +1,8 @@
+
+sudi: required
+services:
+  - docker
+
+script:
+  - docker build -t /krisso-hub/nanny
+  - docker images krisso-hub/nanny
