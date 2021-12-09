@@ -1,0 +1,53 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      
+  test:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Super Duper Linter
+            # You may pin to the exact commit or the version.
+            # uses: JustinGrote/Super-Duper-Linter@76596b0ef7d3e47ebdf7b2765c25db26b92df63e
+          uses: JustinGrote/Super-Duper-Linter@preview
+          with:
+                # Name(s) of the linters you wish to run. Runs all by default
+            linter: all # optional
+            
+            # Specify a relative path within your repository that contains the custom linters. Defaults to "linters". These definitions will OVERRIDE (not merge) definitions of the same name.
+            customLinterPath: /* # optional
+            
+            # Set to True to enable advanced Powershell-level debugging
+            debug: True # optional
+            
+            # Set to True to enable advanced Powershell-level verbose logging
+            verbose: True # optional
+            
+            # Set to True to only display problems in the test result output
+            problemsOnly: True # optional
+            
+            # Set to the number of linters to run concurrently. By default this is set to the number of logical cores in your system plus 1
+            parallel: 3 # optional
+            
+            # Set to True to evaluate all files in the repository, not just those that have changed since the last PR
+            all: True # optional
+            
+            # Set to true to validate the linter operation against defined test cases. This is useful if defining a new custom linter.
+            test: True # optional
+            
+            # Choose what level of issue severity consistutes a failure of the linter and that it should exit with a non-zero exit status. Options are error, warning, and information. Options are inclusive of their previous choices (e.g. setting information also fails on warnings and errors)
+            severity: error # optional
